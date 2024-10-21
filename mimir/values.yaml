@@ -1,0 +1,15 @@
+replicaCount: 1
+
+mimir_distributed:
+  rbac:
+    create: false
+    type: scc
+    podSecurityContext:
+      fsGroup: null
+      runAsGroup: null
+      runAsUser: null
+  rollout_operator:
+    podSecurityContext:
+      fsGroup: null
+      runAsGroup: null
+      runAsUser: null
