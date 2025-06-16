@@ -1,0 +1,46 @@
+#replicaCount: 1
+
+mimir_distributed:
+  ingester:
+    zoneAwareReplication:
+      enabled: false
+
+  querier:
+    replicas: 1
+
+  query_scheduler:
+    replicas: 1
+
+  store_gateway:
+    zoneAwareReplication:
+      enabled: false
+
+  # Mimir others
+
+  graphite:
+    enabled: false
+
+  alertmanager:
+    enabled: false
+
+  ruler:
+    enabled: true
+    remoteEvaluationDedicatedQueryPath: false
+
+  nginx:
+    enabled: true
+
+  ingress:
+    enabled: false
+
+  # Meta-monitoring
+
+  metaMonitoring:
+    dashboards:
+      enabled: false
+
+    # ensure CRDs are installed first
+    prometheusRule:
+      enabled: false
+      mimirAlerts: false
+      mimirRules: false

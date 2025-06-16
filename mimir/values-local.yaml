@@ -1,0 +1,9 @@
+mimir_distributed:
+  minio:
+    enabled: true
+
+  rollout_operator:
+    enabled: false
+
+  overrides_exporter:
+    enabled: false

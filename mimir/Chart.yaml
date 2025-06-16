@@ -1,0 +1,12 @@
+apiVersion: v2
+name: mimir
+description: Grafana Mimir
+type: application
+version: "1"
+appVersion: "1"
+
+dependencies:
+  - name: mimir-distributed
+    alias: mimir_distributed
+    version: ">5.8.0-0 !=5.8.0-weekly.339-dev.2"
+    repository: https://grafana.github.io/helm-charts

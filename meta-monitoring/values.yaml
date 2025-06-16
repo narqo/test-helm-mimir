@@ -1,0 +1,129 @@
+k8smonitoring:
+  cluster:
+    name: local-1
+
+  destinations:
+    - name: mimir
+      type: prometheus
+      url: http://mmr-mimir-nginx.tns-mimir-1.svc.cluster.local/api/v1/push
+      tenantId: 0
+    - name: loki
+      type: loki
+      url: http://loki-gateway.tns-loki-1.svc.cluster.local/loki/api/v1/push
+      tenantId: 0
+
+    # - name: tempo
+    #   type: otlp
+    #   protocol: http
+    #   url: http://tempo.tempo.svc:443/otlp
+    #   metrics: { enabled: false }
+    #   logs: { enabled: false }
+    #   traces: { enabled: true }
+
+  # Integrations (ie. service integrations
+  integrations:
+    collector: alloy-singleton
+    # attach available node labels to all integration metrics collection
+    nodeLabels:
+      nodepool: true
+      region: true
+      availability_zone: true
+      node_role: true
+      os: true
+      architecture: true
+      instance_type: true
+
+    # scrape metrics/logs from Mimir
+    mimir:
+      instances:
+        - name: mmr
+          namespaces:
+            - tns-mimir-1
+          labelSelectors:
+            app.kubernetes.io/name: mimir
+
+          logs:
+            enabled: true
+            tuning:
+              dropLogLevels: []
+
+          metrics:
+            enabled: true
+            scrapeInterval: 30s
+
+  # Features (ie. what kinds of data to collect)
+  clusterEvents:
+    enabled: true
+    collector: alloy-singleton
+    namespaces:
+      - tns-mimir-1
+
+  clusterMetrics:
+    enabled: false
+
+  nodeLogs:
+    enabled: false
+
+  podLogs:
+    enabled: true
+    collector: alloy-singleton
+    # nodeLabels:
+    #   nodePool: true
+    #   region: true
+    #   availabilityZone: true
+    #   nodeRole: true
+    #   os: true
+    #   architecture: true
+    #   instanceType: true
+
+    structuredMetadata:
+      nodepool:
+      region:
+      availability_zone:
+      node_role:
+      os:
+      architecture:
+      instance_type:
+
+    labelsToKeep:
+      - app
+      - app_kubernetes_io_name
+      - component
+      - container
+      - job
+      - level
+      - namespace
+      - pod
+      - service_name
+
+    gatherMethod: kubernetesApi
+    namespaces:
+      - tns-mimir-1
+
+  applicationObservability:
+    enabled: false
+
+  prometheusOperatorObjects:
+    enabled: false
+
+  # Collectors (k8s workloads running alloy containers)
+  alloy-singleton:
+    enabled: true
+
+  alloy-metrics:
+    enabled: false
+
+  alloy-logs:
+    enabled: false
+
+  alloy-profiles:
+    enabled: false
+
+  alloy-receiver:
+    enabled: false # enabled: true
+    # alloy:
+    #   extraPorts:
+    #     - name: jaeger-http
+    #       port: 14268
+    #       targetPort: 14268
+    #       protocol: TCP

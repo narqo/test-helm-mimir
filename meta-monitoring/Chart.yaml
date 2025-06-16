@@ -1,0 +1,12 @@
+apiVersion: v2
+name: k8s-monitoring
+description: Grafana Mimir meta monitoring
+type: application
+version: "1"
+appVersion: "1"
+
+dependencies:
+  - name: k8s-monitoring
+    alias: k8smonitoring
+    version: ">=3"
+    repository: https://grafana.github.io/helm-charts
