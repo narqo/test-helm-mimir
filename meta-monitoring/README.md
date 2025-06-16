@@ -1,5 +1,7 @@
 # meta-monitoring
 
+Refer to [k8s-monitoring-3.x docs](https://github.com/grafana/k8s-monitoring-helm/tree/k8s-monitoring-3.0.0/charts/k8s-monitoring/docs).
+
 Step 0. Update k8s-monitoring subchart
 
 ```
